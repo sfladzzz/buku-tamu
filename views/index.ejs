@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Buku Tamu</title>
+</head>
+<body class="relative bg-gradient-to-t from-indigo-500 via-purple-500 to-pink-500">
+    <h1 class="mt-6 mb-10 text-4xl font-bold text-center text-white">Buku Tamu</h1>
+    <div class="flex justify-center mx-6 my-8 ">
+        <Form method="post" 
+            action="/kirim" 
+            class="p-10 w-80 rounded-xl bg-white/20">
+            <p class="mb-2 ml-2 font-bold text-white">Nama :</p>
+            <input type="text" 
+                name="nama" 
+                placeholder="Nama" 
+                required 
+                class="w-full p-2 rounded-xl">
+            <p class="mt-4 mb-2 ml-2 font-bold text-white"> Pesan :</p>
+            <textarea 
+                name="pesan" 
+                placeholder="Pesan" 
+                required
+                class="w-full p-2 rounded-xl"
+                ></textarea>
+            <button 
+                type="submit"
+                class="w-full p-2 mt-4 font-bold bg-white rounded-xl"
+                >Kirim</button>
+        </Form>
+    </div>
+
+    <hr>
+    <h2 class="mt-4 mb-10 text-3xl font-bold text-center text-white">Pesan Masuk:</h2>
+    <div class="flex justify-center mx-6 my-8 ">
+        <div class="p-10 mx-auto space-y-8 w-80 md:w-2/3 lg:w-1/2 rounded-xl bg-white/20"> <% data.forEach (d => { %>
+        <div class="flex items-start justify-between p-6 rounded-lg shadow-md bg-white/30">
+            <div>
+                <p class="text-xl font-bold text-white">
+                    <%= d.nama %>
+                </p>
+                <p class="mt-2 text-white message-content">
+                    <%= d.pesan %>
+                </p>
+                </div>
+            
+            <form action="/delete/<%= d.id %>" method="POST" class="ml-4">
+                <button type="submit"
+                    class="p-1 -m-1 text-red-300 rounded-md hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                </button>
+            </form>
+        </div>
+        <%}) %>
+</div>
+
+<style>
+    .message-content {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+</style>
+    </div>
+</body>
+</html>
