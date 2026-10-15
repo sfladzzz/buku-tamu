@@ -7,9 +7,15 @@ const app = express()
 const PORT = process.env.PORT || 3000
 
 // Render: set DATABASE_PATH=/var/data/tamu.db after attaching a persistent disk.
+// On first startup, copy the repository database to the persistent disk if it exists.
 // Local development: use ./database/tamu.db.
-const databasePath = process.env.DATABASE_PATH || path.join(__dirname, 'database', 'tamu.db')
+const localDatabasePath = path.join(__dirname, 'database', 'tamu.db')
+const databasePath = process.env.DATABASE_PATH || localDatabasePath
 fs.mkdirSync(path.dirname(databasePath), { recursive: true })
+
+if (process.env.DATABASE_PATH && !fs.existsSync(databasePath) && fs.existsSync(localDatabasePath)) {
+    fs.copyFileSync(localDatabasePath, databasePath)
+}
 
 const db = new sqlite3.Database(databasePath, (err) => {
     if (err) {
